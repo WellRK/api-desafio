@@ -1,46 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
+const PedidosController = require('../controllers/pedidos-controller')
 
 
 // Retorna os pedidos
-router.get('/', (req, res, next) => {
-    res.status(200).send({
-        mensagem: 'Retorna os pedidos'
-    });
-
-});
+router.get('/', PedidosController.retornaPedidos);
 
 // Insere um pedido
-router.post('/', (req, res, next) => {
-    const pedido = {
-        id_produto: req.body.id_produto,
-        quantidade: req.body.quantidade
-    };
-    res.status(201).send({
-        mensagem: 'O pedido foi criado com sucesso!',
-        pedidoCriado: pedido
-    });
-
-});
+router.post('/', PedidosController.criarPedidos);
 
 
 // Retorna os dados do pedido
-router.get('/:id_pedido', (req, res, next) => {
-    const id = req.params.id_pedido
-    res.status(200).send({
-        mensagem: 'Pedido',
-        id: id
-    });
-})
-
+router.get('/:id_pedido', PedidosController.retornaDadosPedidos);
 
 // Deleta o pedido
-router.delete('/', (req, res, next) => {
-    res.status(201).send({
-        mensagem: 'Pedido excluído com sucesso'
-    });
-});
+router.delete('/', PedidosController.excluirPedidos);
 
 module.exports = router;
 

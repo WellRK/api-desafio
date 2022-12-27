@@ -1,53 +1,22 @@
 const express = require('express');
 const router = express.Router();
-
-
+const ProdutosController = require('../controllers/produtos-controller')
 
 // Retorna os produtos
-router.get('/', (req, res, next) => {
-    res.status(200).send({
-        mensagem: 'Testando GET da rota de produtos'
-    });
-
-});
+router.get('/', ProdutosController.retornaProdutos);
 
 // Insere um produto
-router.post('/', (req, res, next) => {
-    
-    const produto = {
-        nome: req.body.nome,
-        preco: req.body.preco
-    };
-    res.status(201).send({
-        mensagem: 'Insere um produto',
-        produtoCriado: produto
-    })
-
-});
+router.post('/', ProdutosController.inserirProdutos);
 
 
 // Retorna os dados do produto
-router.get('/:id_produto', (req, res, next) => {
-    const id = req.params.id_produto
-    res.status(200).send({
-        mensagem: 'Produto exclusivo',
-        id: id
-    });
-})
+router.get('/:id_produto', ProdutosController.DadosExclusivos);
 
-// Altera um pedido
-router.patch('/', (req, res, next) => {
-    res.status(201).send({
-        mensagem: 'Produto alterado com sucesso!'
-    });
-});
+// Altera um produto
+router.patch('/', ProdutosController.alterarProdutos);
 
-// Deleta um pedido
-router.delete('/', (req, res, next) => {
-    res.status(201).send({
-        mensagem: 'Produto deletado com sucesso!'
-    });
-});
+// Deleta um produto
+router.delete('/', ProdutosController.deletarProduto);
 
 module.exports = router;
 
