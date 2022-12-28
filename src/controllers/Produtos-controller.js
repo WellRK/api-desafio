@@ -1,16 +1,29 @@
+const Produto = require("../models/Produtos");
+
 exports.retornaProdutos = (req, res, next) => {
     res.status(200).send({
         mensagem: 'Retorna os produtos'
     });
 }
 
-exports.inserirProdutos = (req, res, next) => {
+exports.inserirProdutos = async (req, res, next) => {
+    const { nome, preco } = req.body
+    
     const produto = {
-        nome: req.body.nome,
-        preco: req.body.preco
+        nome,
+        preco
     };
+
+    try {
+        await Produto.create(produto)
+
+        res.status(201).json({message: 'Produto inserido com sucesso'})
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
+
     res.status(201).send({
-        mensagem: 'Insere um produto',
+        mensagem: 'Produto inserido com sucesso',
         produtoCriado: produto
     })
 }

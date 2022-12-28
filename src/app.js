@@ -1,29 +1,26 @@
 const express = require ('express');
 const app = express();
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 
-const rotaProdutos = require('./routes/produtos');
-const rotaPedidos = require('./routes/pedidos');
+const mongoose = require('mongoose');
+const Produto = require('./models/Produtos')
 
+//const bodyParser = require('body-parser');
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+
+const rotaProdutos = require('./routes/Produtos');
+const rotaPedidos = require('./routes/Pedidos');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extend: false }));
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-        'Access-Control-Allow-Header', 
-        'Origin, X-Resquested-With, Content-Type, Accept, Authorization');
-
-        if (req.method === 'OPTIONS') {
-            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE');
-            return res.status(200).send({});
-        }
-        next();
-
-})
-
+app.use(express.urlencoded({ extend: true }));
+app.use(express.json());
 
 app.use('/produtos', rotaProdutos);
 app.use('/pedidos', rotaPedidos);
@@ -52,6 +49,24 @@ app.use((error, req,res, next) => {
         }
     });
 });
+
+
+const DB_USER = 'wellrk'
+const DB_PASSWORD = encodeURIComponent('1234')
+
+
+mongoose
+    .connect(
+        `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.iawbgmv.mongodb.net/test`
+    )
+    .then(() => {
+        console.log('Conectado ao MongoDB!')
+        app.listen(3000)
+
+    })
+    .catch((err) => console.log(err))
+
+
 
 module.exports = app;
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const PedidosController = require('../controllers/pedidos-controller')
+const PedidosController = require('../controllers/Pedidos-controller')
 
 
 // Retorna os pedidos
