@@ -1,22 +1,22 @@
 const express = require('express');
 const pedidosRouter = express.Router();
-const ProdutosController = require('../controllers/Produtos-controller')
+const ProdutosController = require('../controllers/produtosController')
 
 // Retorna os produtos
-pedidosRouter.get('/', ProdutosController.retornaProdutos);
+pedidosRouter.get('/produtos', ProdutosController.retornaProdutos);
 
 // Insere um produto
 pedidosRouter.post('/produtos', ProdutosController.inserirProdutos);
 
 
 // Retorna os dados do produto
-pedidosRouter.get('/:id_produto', ProdutosController.DadosExclusivos);
+pedidosRouter.get('/produtos/:id', ProdutosController.DadosExclusivos);
 
 // Altera um produto
-pedidosRouter.patch('/', ProdutosController.alterarProdutos);
+pedidosRouter.patch('/produtos/:id', ProdutosController.alterarProdutos);
 
 // Deleta um produto
-pedidosRouter.delete('/', ProdutosController.deletarProduto);
+pedidosRouter.delete('/produtos/:id', ProdutosController.deletarProduto);
 
 module.exports = pedidosRouter;
 
