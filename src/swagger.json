@@ -2,35 +2,180 @@
     "openapi": "3.0.0",
     "info" : { 
         "title" : "API-DESAFIO",
-        "description" : "",
-        "version" : "0.1.9"
+        "description" : "API com objetivo de realizar um desafio",
+        "contact":{
+            "email": "wellrokembach@gmail.com"
+        },
+        "version" : "1.0.0"
     },
-    "server" : [],
+    "server" : [
+        {
+            "url":"http://localhost:3000/v1",
+            "Description": "API Desafio"
+        }
+
+    ],
     "paths" : {
-        "/pedidos" : {
-            "get" : {
-                "summary" : "Retorna uma lista de pedidos",
-                "responses" : {
-                    "200" : {
-                        "description" : "",
-                        "content" : {
-                            "application/json": {
-                                "schema" : {
-                                    "type" : "array",
-                                    "items" : {
-                                        "type" : "string"
-                                    } 
-                                    
-
+        "/v1/produtos" : {
+            "post": {
+                "summary" : "Cadastro de produtos",
+                "description" : "Rota responsável por cadastrar um produto",
+                "tags": ["Products"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Products"  
+                            },
+                            "examples":{
+                                "product":{
+                                    "value":{
+                                        "nome": "Maquina 01",
+                                        "preco": "300"
+                                    }
                                 }
-                            }
-
+                            }    
                         }
                     }
+                },
+                "responses":{
+                    "500" :{
+                        "description" : "Erro ao cadastrar o produto"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Products"
+    
+                                }
+                            }
+                        }
+                    }
+                }
 
+                
+            }, 
+            "get":{
+                "summary" : "Listar produtos",
+                "description" : "Rota responsável por listar os produtos",
+                "tags": ["Products"],
+                "parameters" : [
+                    {
+                        "nome": "Nome",
+                        "preco" : "00.00" 
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Products"
+    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/pedidos" : {
+            "post": {
+                "summary" : "Cadastro de pedidos",
+                "description" : "Rota responsável por cadastrar um pedido",
+                "tags": ["Solicitation"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Solicitation"  
+                            },
+                            "examples":{
+                                "product":{
+                                    "value":{
+                                        "nome": "Nome 01",
+                                        "observacao": "Anotação do pedido"
+                                    }
+                                }
+                            }    
+                        }
+                    }
+                },
+                "responses":{
+                    "500" :{
+                        "description" : "Erro ao cadastrar o pedido"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Solicitation"
+    
+                                }
+                            }
+                        }
+                    }
+                }
+
+                
+            }, 
+            "get":{
+                "summary" : "Listar pedidos",
+                "description" : "Rota responsável por listar os pedidos",
+                "tags": ["Solicitation"],
+                "parameters" : [
+                    {
+                        "nome": "Nome",
+                        "observacao" : "00.00" 
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Solicitation"
+    
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
+    },
+    "components":{
+        "schemas" :{
+            "Products":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string"
+                    },
+                    "price":{
+                        "type":"string"
+                    }
+                }
+            },
+            "Solicitation": { "type":"object",
+            "properties":{
+                "name":{
+                    "type":"string"
+                },
+                "Note":{
+                    "type":"string"
+                }
+            }}
+        }
     }
 }

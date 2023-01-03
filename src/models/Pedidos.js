@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Pedido = mongoose.model('Pedido', {
     nome: String,
-    Observacao: String
+    observacao: String
 })
 
 module.exports = Pedido
